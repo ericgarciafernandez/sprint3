@@ -28,7 +28,7 @@ function validate() {
 	// Validate fields entered by the user: name, phone, password, and email
 
 	// Aplicamos regex para saber si solo contiene letras
-	var letras = /^[A-Za-z]+$/;
+	var letras = /^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$/;
 	if (valueName == "" || valueName.length < 3 || !valueName.match(letras)) {
 		error++;
 		errorName.style.display = 'block';
@@ -62,9 +62,19 @@ function validate() {
 	var letrasNumeros = /^(?=.*?\d)(?=.*?[a-zA-Z])[a-zA-Z\d]+$/;
 	if (valuePassword == "" || valuePassword.length < 3 || !valuePassword.match(letrasNumeros)) {
 		error++;
-		errorPassword.style.display = 'block';
+		if (valuePassword.length < 3) {
+			errorPasswordLetter.style.display = 'block';
+		} else {
+			errorPasswordLetter.style.display = 'none';
+		}
+		if (!valuePassword.match(letrasNumeros)) {
+			errorPasswordNumber.style.display = 'block';
+		} else {
+			errorPasswordNumber.style.display = 'none';
+		}
 	} else {
-		errorPassword.style.display = 'none';
+		errorPasswordLetter.style.display = 'none';
+		errorPasswordNumber.style.display = 'none';
 	}
 
 	var numeros = /^[0-9]+$/;
